@@ -1,0 +1,66 @@
+set nocompatible	"vim比vi支持更多功能，如showcmd，避免冲突和副作用
+
+filetype off
+
+call plug#begin('~/.vim/plugged')
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'Yggdroot/indentLine'
+Plug 'rking/ag.vim'
+Plug 'godlygeek/tabular'
+Plug 'kannokanno/previm'
+Plug 'tyru/open-browser.vim'
+Plug 'vim-latex/vim-latex'
+Plug 'fatih/vim-go',{'do':':GoUpdateBinaries'}
+call plug#end()
+syntax on
+set nu
+set foldenable
+set fdm=marker
+set filetype=python
+au BufNewFile,BufRead *.py,*.pyw setf python
+set autoindent " same level indent
+set smartindent " next level indent
+set expandtab
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
+
+set laststatus=2  "永远显示状态栏
+set t_Co=256
+let g:airline_powerline_fonts = 1
+let g:airline_theme='luna'
+let g:airline#extensions#tabline#enabled = 1
+let g:pymode_python = 'python3'
+"设置切换Buffer快捷键"
+nnoremap <C-N> :bn<CR>
+nnoremap <C-P> :bp<CR>
+let g:powerline_pycmd="py3"
+set laststatus=2
+set t_Co=256
+
+set guifont=Powerline_Consolas:h14:cANSI
+"快捷键
+nnoremap <silent> <F5> :NERDTree<CR>
+"markdown相关配置
+nnoremap <silent> <F7> :PrevimOpen<CR>
+
+"vim主题
+syntax enable
+let g:solarized_termcolors=256
+set background=dark
+colorscheme gruvbox
+if has("autocmd")
+  au VimEnter,InsertLeave * silent execute '!echo -ne "\e[2 q"' | redraw!
+  au InsertEnter,InsertChange *
+    \ if v:insertmode == 'i' |
+    \   silent execute '!echo -ne "\e[6 q"' | redraw! |
+    \ elseif v:insertmode == 'r' |
+    \   silent execute '!echo -ne "\e[4 q"' | redraw! |
+    \ endif
+  au VimLeave * silent execute '!echo -ne "\e[ q"' | redraw!
+endif
